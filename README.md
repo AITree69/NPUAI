@@ -47,6 +47,10 @@ python -m demos.02_pipeline.run
 
 # 3. Cross-EP benchmark
 python -m npurai.benchmark --model models/mobilenetv2-12.onnx --batch 8
+
+# 4. End-to-end with any HuggingFace text-classification model
+$env:HF_ENDPOINT = "https://hf-mirror.com"     # mainland CN users
+python -m demos.03_hf_pipeline.run
 ```
 
 ---
@@ -94,15 +98,19 @@ NPUAI/
 │   ├── __init__.py
 │   ├── detect.py            # hardware inventory (WMI, registry, DXGI)
 │   ├── executor.py          # NPUAIExecutor: pick + run + fall back
+│   ├── hub.py               # HuggingFace fetch + tokenize + labels
 │   └── benchmark.py         # cross-EP benchmark, markdown output
 ├── demos/
-│   ├── 01_classify/         # MobileNet v2 image classification
-│   ├── 02_pipeline/         # multi-model pipeline (CNN + SqueezeNet + MNIST)
-│   └── (more to come)
+│   ├── 01_classify/         # MobileNet v2 image classification (ONNX zoo)
+│   ├── 02_pipeline/         # 3-model pipeline
+│   └── 03_hf_pipeline/      # HuggingFace -> ONNX -> NPUAI end-to-end
 ├── models/                  # cached ONNX models (gitignored)
 ├── reports/                 # benchmark markdown + json (sample reports committed)
 ├── tests/
-│   └── smoke_executor.py
+│   ├── smoke_executor.py
+│   ├── test_hub.py
+│   ├── test_executor.py
+│   └── test_detect.py
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
@@ -209,6 +217,11 @@ is the project's changelog of "we actually ran this".
 - **External-data ONNX models** (`.onnx` + `.data` file) need the
   data file next to the model. The ONNX zoo models in the demos
   are inline-data, so this isn't an issue out of the box.
+- **HuggingFace downloads can be slow from mainland China.** Set
+  `HF_ENDPOINT=https://hf-mirror.com` to route through the canonical
+  mirror. NPUAI's `hub.fetch_onnx` does a plain HTTP GET against
+  whatever endpoint you set, sidestepping the metadata-checks in
+  `huggingface_hub` that don't always survive a mirror.
 - **No int8 quantisation yet** — that's the next sprint. The plan is
   to wrap `onnxruntime.quantization` with a CLI so you can quantise
   any model with one command and then run it via the same executor.
@@ -217,6 +230,11 @@ is the project's changelog of "we actually ran this".
 
 ## Roadmap
 
+- [x] `npurai.hub` — HuggingFace model acquisition + tokenisation
+      + label decoding. Cache-first, single-file download, optimum
+      fallback.
+- [x] `demos/03_hf_pipeline` — end-to-end text-classification with
+      any HF model that ships ONNX.
 - [ ] `npuai quantize` — int8 / int4 quantisation helper.
 - [ ] `npuai serve` — minimal HTTP server (FastAPI) that exposes
       model + EP via a single endpoint.

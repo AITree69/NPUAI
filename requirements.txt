@@ -10,11 +10,12 @@ pillow>=10
 # onnxruntime-qnn>=1.18        # Qualcomm Hexagon NPU
 # onnxruntime-vitisai>=1.18    # AMD Ryzen AI native EP
 
-# Demo 1 (image classification)
-#   uses onnx already — no extra deps
-
-# Demo 2 (whisper-tiny int8 transcription)
-# huggingface-hub>=0.24        # for downloading the whisper-tiny int8 ONNX
+# HuggingFace pipeline (demos/03_hf_pipeline)
+huggingface_hub>=0.24
+optimum[onnxruntime]>=1.20
+transformers>=4.42
+tokenizers>=0.19
+hf_xet                         # fast HuggingFace downloads (xet protocol)
 
 # Developer / test
 pytest>=8.0
