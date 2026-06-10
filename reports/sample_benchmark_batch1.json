@@ -1,0 +1,46 @@
+[
+  {
+    "ep": "DmlExecutionProvider",
+    "ok": true,
+    "actual_provider": "DmlExecutionProvider",
+    "iters": 50,
+    "mean_ms": 1.4321700006257743,
+    "p50_ms": 1.4346000098157674,
+    "p95_ms": 1.5408899926114827,
+    "min_ms": 1.301699987379834,
+    "max_ms": 1.6448000096715987,
+    "throughput_fps": 698.2411302869482
+  },
+  {
+    "ep": "CUDAExecutionProvider",
+    "ok": false,
+    "error": "not installed"
+  },
+  {
+    "ep": "OpenVINOExecutionProvider",
+    "ok": false,
+    "error": "not installed"
+  },
+  {
+    "ep": "QNNExecutionProvider",
+    "ok": false,
+    "error": "not installed"
+  },
+  {
+    "ep": "VitisAIExecutionProvider",
+    "ok": false,
+    "error": "not installed"
+  },
+  {
+    "ep": "CPUExecutionProvider",
+    "ok": true,
+    "actual_provider": "CPUExecutionProvider",
+    "iters": 50,
+    "mean_ms": 3.183253998286091,
+    "p50_ms": 1.989449985558167,
+    "p95_ms": 7.132074983383057,
+    "min_ms": 1.7636999837122858,
+    "max_ms": 26.00680000614375,
+    "throughput_fps": 314.1439547514632
+  }
+]

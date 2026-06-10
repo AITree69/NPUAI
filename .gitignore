@@ -1,0 +1,22 @@
+# Caches and large artefacts
+models/*.onnx
+models/*.pb
+models/cache/
+reports/*.png
+reports/*.html
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual envs and IDE
+.venv/
+venv/
+.env
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# OS
+Thumbs.db
